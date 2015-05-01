@@ -75,11 +75,15 @@ def rotateRight(side):
     side[1][0] = oldside[2][1]
 
 
-def F2R1(cube):
+def F2R(cube, level):
 
-    tempFront = cube['front'][0]
-    cube['front'][0] = cube['left'][0]
-    cube['left'][0] = cube['back'][0]
-    cube['back'][0] = cube['right'][0]
-    cube['right'][0] = tempFront
+    tempFront = cube['front'][level]
+    cube['front'][level] = cube['left'][level]
+    cube['left'][level] = cube['back'][level]
+    cube['back'][level] = cube['right'][level]
+    cube['right'][level] = tempFront
 
+    if level == 0:
+        rotateLeft(cube['up'])
+    if level == 2:
+        rotateRight(cube['down'])
