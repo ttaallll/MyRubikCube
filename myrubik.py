@@ -84,11 +84,11 @@ def convertColumn(side1, side2, level):
 
 def F2R(cube, level):
 
-    tempFront = cube['front'][level]
-    cube['front'][level] = cube['left'][level]
-    cube['left'][level] = cube['back'][level]
-    cube['back'][level] = cube['right'][level]
-    cube['right'][level] = tempFront
+    tempSide = cube['front'][:]
+    convertRow(cube['front'], cube['left'], level)
+    convertRow(cube['left'], cube['back'], level)
+    convertRow(cube['back'], cube['right'], level)
+    convertRow(cube['right'], tempSide, level)
 
     if level == 0:
         rotateLeft(cube['up'])
@@ -98,11 +98,11 @@ def F2R(cube, level):
 
 def R2F(cube, level):
 
-    tempFront = cube['front'][level]
-    cube['front'][level] = cube['right'][level]
-    cube['right'][level] = cube['back'][level]
-    cube['back'][level] = cube['left'][level]
-    cube['left'][level] = tempFront
+    tempSide = cube['front'][:]
+    convertRow(cube['front'], cube['right'], level)
+    convertRow(cube['right'], cube['back'], level)
+    convertRow(cube['back'], cube['left'], level)
+    convertRow(cube['left'], tempSide, level)
 
     if level == 0:
         rotateRight(cube['up'])
@@ -111,11 +111,11 @@ def R2F(cube, level):
 
 def F2U(cube, level):
 
-    tempFront = cube['front'][:]
+    tempSide = cube['front'][:]
     convertColumn(cube['front'], cube['down'], level)
     convertColumn(cube['down'], cube['back'], level)
     convertColumn(cube['back'], cube['up'], level)
-    convertColumn(cube['up'], tempFront, level)
+    convertColumn(cube['up'], tempSide, level)
 
     if level == 0:
         rotateRight(cube['right'])
@@ -124,11 +124,11 @@ def F2U(cube, level):
 
 def U2F(cube, level):
 
-    tempFront = cube['front'][:]
+    tempSide = cube['front'][:]
     convertColumn(cube['front'], cube['up'], level)
     convertColumn(cube['up'], cube['back'], level)
     convertColumn(cube['back'], cube['down'], level)
-    convertColumn(cube['down'], tempFront, level)
+    convertColumn(cube['down'], tempSide, level)
 
     if level == 0:
         rotateLeft(cube['right'])
@@ -137,11 +137,11 @@ def U2F(cube, level):
 
 def R2U(cube, level):
 
-    tempFront = cube['up'][:]
+    tempSide = cube['up'][:]
     convertColumn(cube['up'], cube['right'], level)
     convertColumn(cube['right'], cube['down'], level)
     convertColumn(cube['down'], cube['left'], level)
-    convertColumn(cube['left'], tempFront, level)
+    convertColumn(cube['left'], tempSide, level)
 
     if level == 0:
         rotateLeft(cube['front'])
@@ -150,11 +150,11 @@ def R2U(cube, level):
 
 def U2R(cube, level):
 
-    tempFront = cube['up'][:]
+    tempSide = cube['up'][:]
     convertColumn(cube['up'], cube['left'], level)
     convertColumn(cube['left'], cube['down'], level)
     convertColumn(cube['down'], cube['right'], level)
-    convertColumn(cube['right'], tempFront, level)
+    convertColumn(cube['right'], tempSide, level)
 
     if level == 0:
         rotateLeft(cube['back'])
