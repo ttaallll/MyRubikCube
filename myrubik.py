@@ -160,3 +160,49 @@ def U2R(cube, level):
         rotateLeft(cube['back'])
     if level == 2:
         rotateRight(cube['front'])
+
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+colors = [
+    bcolors.OKBLUE,
+    bcolors.OKGREEN,
+    bcolors.FAIL,
+    bcolors.WARNING,
+    bcolors.HEADER,
+    bcolors.BOLD
+]
+
+def printLittleCube(cubeColor):
+    sys.stdout.write(colors[cubeColor] + unichr(0x2588) + bcolors.ENDC + ' ')
+
+import sys
+def printSide(side):
+
+    for i in range(NUM_OF_CUBE):
+        for j in range(NUM_OF_CUBE):
+            printLittleCube(side[i][j])
+        print
+
+
+def printCube(cube):
+    for i in cube.keys():
+        print i
+        printSide(cube[i])
+
+
+def main():
+    R2F(cube, 0)
+    F2R(cube, 1)
+    printCube(cube)
+
+
+main()
