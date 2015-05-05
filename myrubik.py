@@ -43,10 +43,12 @@ cube = {
     ]  # Back
 }
 
+def createCube():
+    return copy.deepcopy(cube)
 
 def rotateLeft(side):
 
-    oldside = side[:]
+    oldside = copy.deepcopy(side)
 
     side[0][0] = oldside[0][2]
     side[0][1] = oldside[1][2]
@@ -63,7 +65,7 @@ def rotateLeft(side):
 
 def rotateRight(side):
 
-    oldside = side[:]
+    oldside = copy.deepcopy(side)
 
     side[0][0] = oldside[2][0]
     side[0][1] = oldside[1][0]
@@ -87,9 +89,9 @@ def convertColumn(side1, side2, level):
 def F2R(cube, level):
 
     tempCube = copy.deepcopy(cube)
-    convertRow(cube['front'], cube['left'], level)
-    convertRow(cube['left'], cube['back'], level)
-    convertRow(cube['back'], cube['right'], level)
+    convertRow(cube['front'], tempCube['left'], level)
+    convertRow(cube['left'], tempCube['back'], level)
+    convertRow(cube['back'], tempCube['right'], level)
     convertRow(cube['right'], tempCube['front'], level)
 
     if level == 0:
@@ -101,9 +103,9 @@ def F2R(cube, level):
 def R2F(cube, level):
 
     tempCube = copy.deepcopy(cube)
-    convertRow(cube['front'], cube['right'], level)
-    convertRow(cube['right'], cube['back'], level)
-    convertRow(cube['back'], cube['left'], level)
+    convertRow(cube['front'], tempCube['right'], level)
+    convertRow(cube['right'], tempCube['back'], level)
+    convertRow(cube['back'], tempCube['left'], level)
     convertRow(cube['left'], tempCube['front'], level)
 
     if level == 0:
@@ -114,9 +116,9 @@ def R2F(cube, level):
 def F2U(cube, level):
 
     tempCube = copy.deepcopy(cube)
-    convertColumn(cube['front'], cube['down'], level)
-    convertColumn(cube['down'], cube['back'], level)
-    convertColumn(cube['back'], cube['up'], level)
+    convertColumn(cube['front'], tempCube['down'], level)
+    convertColumn(cube['down'], tempCube['back'], level)
+    convertColumn(cube['back'], tempCube['up'], level)
     convertColumn(cube['up'], tempCube['front'], level)
 
     if level == 0:
@@ -127,9 +129,9 @@ def F2U(cube, level):
 def U2F(cube, level):
 
     tempCube = copy.deepcopy(cube)
-    convertColumn(cube['front'], cube['up'], level)
-    convertColumn(cube['up'], cube['back'], level)
-    convertColumn(cube['back'], cube['down'], level)
+    convertColumn(cube['front'], tempCube['up'], level)
+    convertColumn(cube['up'], tempCube['back'], level)
+    convertColumn(cube['back'], tempCube['down'], level)
     convertColumn(cube['down'], tempCube['front'], level)
 
     if level == 0:
@@ -143,15 +145,15 @@ def R2U(cube, level):
 
     # right to up
     for i in range(NUM_OF_CUBE):
-        cube['up'][NUM_OF_CUBE - 1 - level][i] = cube['right'][i][level]
+        cube['up'][NUM_OF_CUBE - 1 - level][i] = tempCube['right'][i][level]
 
     # down to right
     for i in range(NUM_OF_CUBE):
-        cube['right'][i][level] = cube['down'][level][NUM_OF_CUBE - 1 - i]
+        cube['right'][i][level] = tempCube['down'][level][NUM_OF_CUBE - 1 - i]
 
     # left to down
     for i in range(NUM_OF_CUBE):
-        cube['down'][level][NUM_OF_CUBE - 1 - i] = cube['left'][NUM_OF_CUBE - 1 - i][NUM_OF_CUBE - 1 - level]
+        cube['down'][level][NUM_OF_CUBE - 1 - i] = tempCube['left'][NUM_OF_CUBE - 1 - i][NUM_OF_CUBE - 1 - level]
 
     # up to left
     for i in range(NUM_OF_CUBE):
@@ -168,15 +170,15 @@ def U2R(cube, level):
 
     # left to up
     for i in range(NUM_OF_CUBE):
-        cube['up'][NUM_OF_CUBE - 1 - level][i] = cube['left'][NUM_OF_CUBE - 1 -  i][NUM_OF_CUBE - 1 - level]
+        cube['up'][NUM_OF_CUBE - 1 - level][i] = tempCube['left'][NUM_OF_CUBE - 1 -  i][NUM_OF_CUBE - 1 - level]
 
     # down to left
     for i in range(NUM_OF_CUBE):
-        cube['left'][NUM_OF_CUBE - 1 -  i][NUM_OF_CUBE - 1 - level] = cube['down'][level][NUM_OF_CUBE - 1 - i]
+        cube['left'][NUM_OF_CUBE - 1 -  i][NUM_OF_CUBE - 1 - level] = tempCube['down'][level][NUM_OF_CUBE - 1 - i]
 
     # right to down
     for i in range(NUM_OF_CUBE):
-        cube['down'][level][NUM_OF_CUBE - 1 - i] = cube['right'][i][level]
+        cube['down'][level][NUM_OF_CUBE - 1 - i] = tempCube['right'][i][level]
 
     # up to right
     for i in range(NUM_OF_CUBE):
@@ -234,5 +236,5 @@ def main():
     U2R(cube, 2)
     printCube(cube)
 
-
-main()
+if __name__ == "__main__":
+    main()
