@@ -1,6 +1,5 @@
 __author__ = 'tal'
 
-import copy
 from myrubik import *
 
 
